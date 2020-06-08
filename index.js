@@ -60,7 +60,7 @@ function showData(data) {
                         tooltip.html(`${d["Name"]} (${d["Nationality"]})<br>
                                         Year: ${d["Year"]}, Time: ${d["Time"]}
                                         ${d["Doping"].length == 0 ? "" : `<br><br>${d['Doping']}`}`)
-                            .attr("data-year", (d, i) => years[i])
+                            .attr("data-year", years[i])
                             .style("opacity", .85)
                             .style("top", (yScale(timesInSec[i])) + "px")
                             .style("left", (xScale(years[i]) + 10) + "px");
