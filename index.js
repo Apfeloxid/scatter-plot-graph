@@ -1,6 +1,6 @@
 const h = 600;
 const w = 1000;
-const padding = 50;
+const padding = 80;
 
 fetch("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json")
     .then(response => response.json())
@@ -34,10 +34,16 @@ function showData(data) {
                     .domain([minTime, maxTime])
                     .range([padding, h - padding]);
 
-    const svg = d3.select("main")
+    const svg = d3.select("#svg-container")
                     .append("svg")
                     .attr("height", h)
                     .attr("width", w);
+
+    d3.select("#legend")
+        .style("top", (h/2) + "px")
+        .style("left", (w - 260) + "px");
+
+    const tooltip = d3.select("#tooltip");
 
     svg.selectAll("circle")
                     .data(data)
@@ -49,7 +55,19 @@ function showData(data) {
                     .attr("cy", (d, i) => yScale(timesInSec[i]))
                     .attr("r", 8)
                     .attr("class", "dot")
-                    .style("fill", d => (d["Doping"].length == 0 ? "yellowgreen" : "orange"));
+                    .style("fill", d => (d["Doping"].length == 0 ? "yellowgreen" : "orange"))
+                    .on("mouseover", (d, i) => {
+                        tooltip.html(`${d["Name"]} (${d["Nationality"]})<br>
+                                        Year: ${d["Year"]}, Time: ${d["Time"]}
+                                        ${d["Doping"].length == 0 ? "" : `<br><br>${d['Doping']}`}`)
+                            .attr("data-year", (d, i) => years[i])
+                            .style("opacity", .85)
+                            .style("top", (yScale(timesInSec[i])) + "px")
+                            .style("left", (xScale(years[i]) + 10) + "px");
+                    })
+                    .on("mouseout", () => {
+                       tooltip.style("opacity", 0).style("top", "-1000px").style("left", "-1000px");
+                    });
 
 
     let xAxis = d3.axisBottom(xScale);
@@ -67,5 +85,4 @@ function showData(data) {
             .attr("transform", "translate(" + padding + ", 0)")
             .attr("id", "y-axis")
             .call(yAxis);
-
 }

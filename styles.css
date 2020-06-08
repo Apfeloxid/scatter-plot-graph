@@ -5,6 +5,7 @@
 
 main {
     margin-top: 35px;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,4 +23,50 @@ h2 {
 
 svg {
     margin-top: 20px;
+}
+
+#legend {
+    display: grid;
+    grid-template-columns: 30px 250px;
+    grid-template-rows: 30px 30px;
+    position: absolute;
+    left: 1000px;
+    top: 230px;
+}
+
+#legend-not-doped-color {
+    background-color: yellowgreen;
+    height: 20px;
+    width: 20px;
+    margin: auto;
+}
+
+#legend-doped-color {
+    background-color: orange;
+    height: 20px;
+    width: 20px;
+    margin: auto;
+}
+
+#legend-not-doped-text {
+    margin: auto;
+    margin-left: 5px;
+}
+
+#legend-doped-text {
+    margin: auto;
+    margin-left: 3px;
+}
+
+#tooltip {
+    border-radius: 5%;
+    background-color: skyblue;
+    position: absolute;
+    padding: 8px;
+    font-size: 13px;
+    opacity: 0;
+}
+
+#svg-container {
+    position: relative;
 }
